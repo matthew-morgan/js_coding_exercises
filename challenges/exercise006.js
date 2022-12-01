@@ -6,6 +6,7 @@
  */
 export const sumMultiples = (arr) => {
   if (arr === undefined) throw new Error("arr is required");
+  return arr.filter((num) => num % 3 === 0 || num % 5 === 0).reduce((acc, b) => acc + b, 0);
 };
 
 /**
@@ -15,6 +16,7 @@ export const sumMultiples = (arr) => {
  */
 export const isValidDNA = (str) => {
   if (str === undefined) throw new Error("str is required");
+  return str.length === str.split("").filter(s => "CGTA".includes(s)).length;
 };
 
 /**
@@ -24,6 +26,10 @@ export const isValidDNA = (str) => {
  */
 export const getComplementaryDNA = (str) => {
   if (str === undefined) throw new Error("str is required");
+  if (!isValidDNA(str)) throw new Error("invalid DNA string");
+  let bases = "ACTG"
+  let complements = "TGAC"
+  return str.split("").map(s => complements[bases.indexOf(s)]).join("");
 };
 
 /**
@@ -32,7 +38,16 @@ export const getComplementaryDNA = (str) => {
  * @returns {Boolean}
  */
 export const isItPrime = (n) => {
+  //Lifted from https://en.wikipedia.org/wiki/Primality_test#JavaScript
   if (n === undefined) throw new Error("n is required");
+  if (n == 2 || n == 3)
+    return true;
+  if (n <= 1 || n % 2 == 0 || n % 3 == 0)
+    return false;
+  for (let i = 5; i * i <= n; i += 6)
+    if (n % i == 0 || n % (i + 2) == 0)
+      return false;
+  return true;
 };
 
 /**
@@ -49,6 +64,7 @@ export const isItPrime = (n) => {
 export const createMatrix = (n, fill) => {
   if (n === undefined) throw new Error("n is required");
   if (fill === undefined) throw new Error("fill is required");
+  return Array(n).fill(Array(n).fill(fill));
 };
 
 /**
@@ -66,4 +82,5 @@ export const createMatrix = (n, fill) => {
 export const areWeCovered = (staff, day) => {
   if (staff === undefined) throw new Error("staff is required");
   if (day === undefined) throw new Error("day is required");
+  return staff.filter(e => e.rota.find(workday => workday == day)).length >= 3;
 };
