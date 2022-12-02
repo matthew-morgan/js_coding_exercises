@@ -4,6 +4,7 @@
  */
 export const sumDigits = (n) => {
   if (n === undefined) throw new Error("n is required");
+  return String(n).split("").reduce((acc, b) => acc + parseInt(b), 0);
 };
 
 /**
@@ -17,10 +18,12 @@ export const sumDigits = (n) => {
 export const createRange = (start, end, step) => {
   if (start === undefined) throw new Error("start is required");
   if (end === undefined) throw new Error("end is required");
-  if (step === undefined)
-    console.log(
-      "FYI: Optional step parameter not provided. Remove this check once you've handled the optional step!"
-    );
+  step === undefined ? step = 1 : step;
+  const range = [];
+  for (let i = start; i <= end; i += step) {
+    range.push(i);
+  }
+  return range;
 };
 
 /**
@@ -55,12 +58,20 @@ export const createRange = (start, end, step) => {
 export const getScreentimeAlertList = (users, date) => {
   if (users === undefined) throw new Error("users is required");
   if (date === undefined) throw new Error("date is required");
+  const SCREEN_TIME = 100;
+  return users
+    .filter(user => user.screenTime
+      .some(screenTime => screenTime.date === date && Object.values(screenTime.usage)
+        .reduce((acc, b) => acc + b, 0) > SCREEN_TIME))
+    .map(user => user.username);
 };
 
 /**
- * This function will receive a hexadecimal color code in the format #FF1133. A hexadecimal code is a number written in hexadecimal notation, i.e. base 16. If you want to know more about hexadecimal notation:
+ * This function will receive a hexadecimal color code in the format #FF1133. A hexadecimal code is a number 
+ * written in hexadecimal notation, i.e. base 16. If you want to know more about hexadecimal notation:
  * https://www.youtube.com/watch?v=u_atXp-NF6w
- * For colour codes, the first 2 chars (FF in this case) represent the amount of red, the next 2 chars (11) represent the amound of green, and the last 2 chars (33) represent the amount of blue.
+ * For colour codes, the first 2 chars (FF in this case) represent the amount of red, the next 2 chars (11) 
+ * represent the amound of green, and the last 2 chars (33) represent the amount of blue.
  * Colours can also be represented in RGB format, using decimal notation.
  * This function should transform the hex code into an RGB code in the format:
  * "rgb(255,17,51)"
@@ -69,7 +80,20 @@ export const getScreentimeAlertList = (users, date) => {
  */
 export const hexToRGB = (hexStr) => {
   if (hexStr === undefined) throw new Error("hexStr is required");
+  if (!isValidHexColourCode(hexStr)) throw new Error("not a valid hex colour code");
+  const hexRadix = 16;
+  const r = parseInt(hexStr.substring(1, 3), hexRadix);
+  const g = parseInt(hexStr.substring(3, 5), hexRadix);
+  const b = parseInt(hexStr.substring(5, 7), hexRadix);
+  return `rgb(${r},${g},${b})`
 };
+
+const isValidHexColourCode = (hexStr) => {
+  if (hexStr === undefined) throw new Error("hexStr is required");
+  const VALID_LENGTH = 7;
+  const PREFIX = "#"
+  return hexStr.length === VALID_LENGTH && hexStr.substring(0, 1) === PREFIX && /^[a-f0-9]+$/i.test(hexStr.substring(1, hexStr.length - 1));
+}
 
 /**
  * This function takes a noughts and crosses board represented as an array, where an empty space is represented with null.
@@ -83,4 +107,22 @@ export const hexToRGB = (hexStr) => {
  */
 export const findWinner = (board) => {
   if (board === undefined) throw new Error("board is required");
+  let winner = null;
+  // check rows and columns
+  for (let i = 0; i < 3; i++) {
+    if (board[i][0] === board[i][1] && board[i][0] === board[i][2]) {
+      winner = board[i][0];
+    }
+    if (board[0][i] === board[1][i] && board[0][i] === board[2][i]) {
+      winner = board[0][i];
+    }
+  }
+  // check diagonals
+  if (board[0][0] === board[1][1] && board[0][0] === board[2][2]) {
+    winner = board[0][0];
+  }
+  if (board[0][2] === board[1][1] && board[0][2] === board[2][0]) {
+    winner = board[0][2];
+  }
+  return winner;
 };
