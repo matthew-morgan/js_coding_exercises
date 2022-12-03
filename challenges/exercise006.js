@@ -28,9 +28,8 @@ export const isValidDNA = (str) => {
 export const getComplementaryDNA = (str) => {
   if (str === undefined) throw new Error("str is required");
   if (!isValidDNA(str)) throw new Error("invalid DNA string");
-  const bases = "ACTG"
-  const complements = "TGAC"
-  return str.split("").map(s => complements[bases.indexOf(s)]).join("");
+  const basePairs = { A: "T", T: "A", C: "G", G: "C" };
+  return [...str].map(s => basePairs[s]).join("");
 };
 
 /**
