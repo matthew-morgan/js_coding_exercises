@@ -1,7 +1,7 @@
 export const findNextNumber = (nums, n) => {
   if (nums === undefined) throw new Error("nums is required");
   if (n === undefined) throw new Error("n is required");
-  if (!nums.includes(n) || nums.indexOf(n) == nums.length - 1) {
+  if (!nums.includes(n) || nums.indexOf(n) === nums.length - 1) {
     return null;
   } else {
     return (nums.find((num, index, self) => self[index - 1] === n));
@@ -11,8 +11,8 @@ export const findNextNumber = (nums, n) => {
 export const count1sand0s = (str) => {
   if (str === undefined) throw new Error("str is required");
   return {
-    1: str.split("").filter(e => e == 1).length,
-    0: str.split("").filter(e => e == 0).length
+    1: str.split("").filter(e => e === "1").length,
+    0: str.split("").filter(e => e === "0").length
   }
 };
 
@@ -32,7 +32,7 @@ export const arrShift = (arr) => {
     return arr;
   }
   else {
-    let first = arr[0];
+    const first = arr[0];
     arr[0] = arr[arr.length - 1];
     arr[arr.length - 1] = first;
     return arr;

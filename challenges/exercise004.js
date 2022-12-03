@@ -6,12 +6,12 @@ export function findSmallNums(nums) {
 export function findNamesBeginningWith(names, char) {
   if (!names) throw new Error("names is required");
   if (!char) throw new Error("char is required");
-  return names.filter(name => name.charAt(0) == char);
+  return names.filter(name => name.charAt(0) === char);
 }
 
 export function findVerbs(words) {
   if (!words) throw new Error("words is required");
-  return words.filter(word => word.substring(0, 3) == 'to ');
+  return words.filter(word => word.substring(0, 3) === 'to ');
 }
 
 export function getIntegers(nums) {
