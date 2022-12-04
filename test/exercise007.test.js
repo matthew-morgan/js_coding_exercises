@@ -87,10 +87,18 @@ describe("findWinner", () => {
             ["0", "0", "X"],
             ["0", "X", "0"]
         ];
+
+        const board5 = [
+            ["X", "X", "X"],
+            ["X", null, "0"],
+            [null, null, null]
+        ];
+
         expect(findWinner(board1)).toBe("X");
         expect(findWinner(board2)).toBe("0");
         expect(findWinner(board3)).toBe(null);
         expect(findWinner(board4)).toBe("0");
+        expect(findWinner(board5)).toBe("X");
 
     });
 });
