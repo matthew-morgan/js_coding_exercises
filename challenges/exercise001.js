@@ -27,7 +27,7 @@ export function getMiddleCharacter(str) {
   if (str === undefined) throw new Error("str is required");
   if (str.length % 2 === 0) {
     return str.charAt((str.length / 2) - 1) + str.charAt(str.length / 2);
-  } else {  
+  } else {
     return str.charAt(Math.floor(str.length / 2));
   }
 }
@@ -63,7 +63,7 @@ export function getMeanScore(scores) {
 
 export function simpleFizzBuzz(n) {
   if (n === undefined) throw new Error("n is required");
-  if (n % 15 === 0) {
+  if (n % 3 === 0 && n % 5 === 0) {
     return "fizzbuzz";
   } else if (n % 3 === 0) {
     return "fizz";
